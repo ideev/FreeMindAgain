@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>FreeMindAgain — карта мыслей</title><style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#303c32;background:#fbfcf7;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer;border:1px solid #d8dfd0;background:#fffefa;border-radius:6px;padding:9px 12px;color:#53634b}button:hover{background:#edf2e5}button:disabled{opacity:.4;cursor:default}.primary{background:#617e48;color:white;border-color:#617e48}.primary:hover{background:#4c6836}button:focus-visible,input:focus-visible,textarea:focus-visible,.node:focus-visible{outline:3px solid #96b47c;outline-offset:3px}header{height:86px;background:#fffefa;border-bottom:1px solid #dce1d6;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:13px}.mark{font-size:40px;color:#688b50}.brand strong{font:25px Georgia,serif}.brand small{display:block;font-size:9px;letter-spacing:2px;color:#8a9381;margin-top:7px}nav,.tools{display:flex;gap:7px;flex-wrap:wrap}nav button,.tools button{font-size:12px}main{display:grid;grid-template-columns:minmax(0,1fr) 300px;height:calc(100dvh - 86px)}.workspace{position:relative;overflow:hidden;background-image:radial-gradient(#cdd6c6 .7px,transparent .7px);background-size:22px 22px}.topbar{position:absolute;top:24px;left:26px;right:26px;display:flex;justify-content:space-between;gap:12px;z-index:2;pointer-events:none}.tools{pointer-events:auto;align-content:start}.eyebrow{font-size:10px;letter-spacing:1.6px;color:#87917c}h1{font:24px Georgia,serif;margin:9px 0;max-width:450px;overflow-wrap:anywhere}#canvas{position:absolute;inset:0;touch-action:none;cursor:grab}#world{position:absolute;transform-origin:0 0}#edges{position:absolute;width:1px;height:1px;overflow:visible;pointer-events:none}.node{position:absolute;max-width:280px;min-width:80px;padding:10px 14px 8px;background:#fbfcf7;border:0;border-bottom:2px solid var(--color);border-radius:7px 7px 0 0;font-size:15px;color:#303c32;user-select:none;touch-action:none;cursor:grab;overflow-wrap:anywhere;text-align:center}.node.selected{background:#eaf0df;box-shadow:0 0 0 3px #dbe5cb}.node.root{font:23px Georgia,serif;border:2px solid #688b50;border-radius:50%;padding:24px 28px;background:#e8efd9;min-width:160px}.node.group{font-size:18px;font-weight:bold}.node .toggle{display:inline-block;position:relative;box-sizing:border-box;border:1px solid var(--color);border-radius:50%;margin-left:9px;width:18px;height:18px;padding:0;vertical-align:middle;background:#fffefa;cursor:pointer;line-height:0}.node .toggle::before,.node .toggle.collapsed::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--color);border-radius:1px}.node .toggle::before{width:8px;height:1.5px}.node .toggle.collapsed::after{width:1.5px;height:8px}.bottom{position:absolute;bottom:20px;left:26px;right:26px;z-index:2;display:flex;justify-content:space-between;align-items:end;gap:12px;pointer-events:none}.bottom p{font-size:11px;color:#7a8570;line-height:1.8;background:#fbfcf7df;margin:0}.zoom{display:flex;align-items:center;background:#fffefa;border:1px solid #dce1d4;border-radius:7px;padding:4px;pointer-events:auto}.zoom button{border:0;padding:4px 9px}.zoom output{font-size:11px;min-width:42px;text-align:center}aside{background:#fffefa;border-left:1px solid #dce1d6;padding:28px 24px;overflow:auto}.panel-icon{margin-top:26px;background:#edf2e4;color:#688b50;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-size:25px}h2{font:24px Georgia,serif;margin:17px 0 10px;overflow-wrap:anywhere}#path{font-size:11px;color:#89917f;overflow-wrap:anywhere;line-height:1.6}label{display:block;font-size:11px;color:#7b866e;margin:20px 0 12px}input,textarea{display:block;width:100%;border:1px solid #d9dfd2;border-radius:5px;background:#fff;color:#303c32;padding:9px;margin-top:7px;font-size:13px}textarea{resize:vertical;line-height:1.5}.actions{display:grid;gap:8px;margin-top:24px;border-top:1px solid #e5e8de;padding-top:22px}.actions button{text-align:left;font-size:12px}.danger{color:#a85848}.help,#status{font-size:11px;line-height:1.8;color:#89917f;margin-top:23px}#status{color:#617e48}dialog{border:1px solid #d9dfd2;border-radius:12px;padding:25px;width:min(420px,90vw);color:#303c32}dialog::backdrop{background:#29352e55}dialog form>div{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}@media(max-width:800px){header{padding:12px 15px;height:auto;flex-wrap:wrap}main{height:calc(100dvh - 120px);grid-template-columns:minmax(0,1fr) 245px}aside{padding:22px 16px}.topbar{left:15px;right:15px;flex-wrap:wrap}.bottom p{display:none}.bottom{justify-content:flex-end}.brand strong{font-size:22px}}@media(max-width:580px){main{display:flex;flex-direction:column;height:auto}.workspace{height:65dvh;min-height:420px}aside{border-left:0;border-top:1px solid #dce1d6}.brand small{display:none}header{gap:10px}nav button{padding:7px 9px}h1{font-size:20px}.topbar{top:16px}}
+[hidden]{display:none!important}.node{width:max-content}
+
+.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}#save-dialog p{font-size:12px;line-height:1.6;color:#7b866e}
+
+.card-heading{display:flex;align-items:flex-start;gap:10px}.card-heading .panel-icon{margin:0;flex:0 0 34px;width:34px;height:34px;font-size:22px;border-radius:7px}.card-heading h2{flex:1;min-width:0;margin:4px 0 0;font-size:21px}.card-heading button{flex-shrink:0;padding:6px 7px;font-size:11px}main.card-hidden{grid-template-columns:minmax(0,1fr)}
+
+body{height:100dvh;display:flex;flex-direction:column}header{display:grid;grid-template-columns:auto minmax(0,1fr) auto;flex-shrink:0}header #title{max-width:none;min-width:0;text-align:center;margin:0 18px;font-size:23px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}main{flex:1;min-height:0;height:auto}.topbar{justify-content:flex-end}.bottom #show-help{pointer-events:auto;display:grid;place-items:center;width:30px;height:30px;padding:0;border-radius:50%;font:18px Georgia,serif;border-color:#a5b298;color:#617e48}#help-dialog{width:min(600px,92vw);max-height:85dvh;overflow:auto}#help-dialog ul{padding-left:20px;font-size:13px;line-height:1.7}#help-dialog li{margin:10px 0}@media(max-width:1100px){header{height:auto;padding:14px 18px;grid-template-columns:auto minmax(0,1fr);gap:12px}header nav{grid-column:1/-1;justify-content:flex-end}}@media(max-width:580px){body{height:auto;min-height:100dvh}header{grid-template-columns:minmax(0,1fr)}header #title{margin:0;text-align:center;font-size:21px}header nav{justify-content:center}main{min-height:auto;flex:none}.bottom{justify-content:space-between}}
+
+header{height:64px;padding-top:8px;padding-bottom:8px}.brand{gap:10px}.brand strong{font-size:22px}.brand .mark{font-size:33px}.brand small{margin-top:4px;font-size:8px;letter-spacing:1.6px}header #title{font-size:21px}.icon-button{display:inline-grid;place-items:center;flex-shrink:0;width:34px;height:34px;padding:7px}.icon-button svg{display:block;width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.zoom .icon-button{width:30px;height:28px;padding:4px}.zoom .icon-button svg{width:18px;height:18px}@media(max-width:1100px){header{height:auto;padding:8px 15px;gap:8px}}@media(max-width:580px){.brand strong{font-size:21px}header{gap:7px}header #title{font-size:20px}}
+
+.info-button span{font:italic bold 23px Georgia,serif;line-height:1}
+
+select{display:block;width:100%;margin-top:7px;border:1px solid #d9dfd2;border-radius:5px;background:#fff;color:#303c32;padding:9px;font:13px Arial,Helvetica,sans-serif}select:focus-visible{outline:3px solid #96b47c;outline-offset:3px}.node-status{display:inline-block;width:18px;height:18px;vertical-align:middle;margin-right:7px;line-height:0}.node-status svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.node-status.planned{color:#9b7433}.node-status.in-progress{color:#537b9f}.node-status.done{color:#245d36}.node-status.done svg{stroke-width:2.5}
+
+.reparent-notice{position:absolute;z-index:5;top:70px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border:1px solid #b9c8a8;border-radius:7px;background:#f1f6e9;box-shadow:0 3px 12px #303c3210;font-size:13px;color:#4b6538}.reparent-notice button{font-size:12px;padding:5px 9px}.choosing-parent,.choosing-parent .node{cursor:crosshair}.node.reparent-source{outline:2px dashed #688b50;outline-offset:5px}
+
+#tool-panel{left:auto;right:16px;top:16px;width:max-content;max-height:calc(100% - 32px);overflow:auto;display:block;pointer-events:auto;z-index:6;border:1px solid #d9dfd2;border-radius:10px;background:#fffefa;box-shadow:0 3px 14px #303c3214}#tool-panel .tools{display:flex;flex-direction:column;flex-wrap:nowrap;align-items:center;gap:6px;padding:7px}#toolbar-handle{display:grid;place-items:center;width:34px;height:19px;padding:2px;border:0;background:transparent;color:#8b987e;cursor:grab;touch-action:none;user-select:none}#toolbar-handle:hover{background:#edf2e5}#toolbar-handle svg{display:block;width:24px;height:12px;fill:currentColor}#tool-panel.dragging #toolbar-handle{cursor:grabbing}#tool-panel.dragging{box-shadow:0 5px 20px #303c3229}
+.reparent-notice{top:16px;right:82px;z-index:7}
+
+</style></head>
+<body><header><div class="brand"><span class="mark">❧</span><div><strong>FreeMindAgain</strong><small>ПРОСТРАНСТВО ДЛЯ МЫСЛЕЙ · 0.1.15</small></div></div><h1 id="title">Новая карта</h1><nav aria-label="Документ"><button id="new">Новая карта</button><button id="open">Открыть JSON</button><button id="save" class="primary">Сохранить</button><button id="save-as">Сохранить как…</button><input type="file" id="file" accept=".json,application/json" hidden></nav></header>
+<main class="card-hidden"><section class="workspace" aria-label="Карта мыслей"><div id="tool-panel" class="topbar" role="toolbar" aria-label="Инструменты карты" aria-orientation="vertical"><div class="tools"><button id="toolbar-handle" type="button" title="Переместить панель — тяните мышью или используйте стрелки" aria-label="Переместить панель"><svg viewBox="0 0 24 12" aria-hidden="true" focusable="false"><circle cx="6" cy="3" r="1"/><circle cx="12" cy="3" r="1"/><circle cx="18" cy="3" r="1"/><circle cx="6" cy="9" r="1"/><circle cx="12" cy="9" r="1"/><circle cx="18" cy="9" r="1"/></svg></button><button id="show-details" class="icon-button info-button" type="button" title="Показать/скрыть карточку узла (F3)" aria-label="Карточка узла" aria-controls="details" aria-expanded="false"><span aria-hidden="true">i</span></button><button id="add" class="icon-button" type="button" title="Добавить узел (+, Insert)" aria-label="Добавить узел" aria-keyshortcuts="+ Insert"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></button><button id="delete-node" class="icon-button danger" type="button" title="Удалить узел или ветку (−, Delete)" aria-label="Удалить узел или ветку" aria-keyshortcuts="- Delete"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg></button><button id="reparent" class="icon-button" type="button" title="Сменить родителя" aria-label="Сменить родителя"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="5" rx="1"/><rect x="14" y="16" width="7" height="5" rx="1"/><path d="M6.5 8v10.5H14m-3-3 3 3-3 3M14 5h6m-3-3 3 3-3 3"/></svg></button><button id="undo" class="icon-button" type="button" title="Отменить" aria-label="Отменить"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5 4 10l5 5M4 10h9a6 6 0 0 1 0 12"/></svg></button><button id="redo" class="icon-button" type="button" title="Повторить" aria-label="Повторить"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 5 5 5-5 5m5-5h-9a6 6 0 0 0 0 12"/></svg></button></div></div><div id="reparent-notice" class="reparent-notice" hidden><span id="reparent-message" role="status">Выберите нового родителя</span><button id="cancel-reparent" type="button">Отмена</button></div><div id="canvas" tabindex="-1"><div id="world"><svg id="edges" aria-hidden="true"></svg><div id="nodes"></div></div></div><div class="bottom"><button id="show-help" type="button" aria-label="Справка по командам" title="Справка по командам">?</button><div class="zoom"><button id="out" aria-label="Уменьшить">−</button><output id="scale">100%</output><button id="in" aria-label="Увеличить">+</button><button id="fit" class="icon-button" type="button" title="Вписать" aria-label="Вписать"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="7" y="7" width="13" height="13" rx="1"/><path d="M16 4H4v12"/></svg></button></div></div></section>
+<aside hidden id="details" aria-label="Карточка узла"><div class="card-heading"><div class="panel-icon" aria-hidden="true">❧</div><h2 id="node-title"></h2><button id="hide-details" type="button">Скрыть</button></div><p id="path"></p><form id="editor"><label>Название<input id="label" maxlength="500" required autocomplete="off"></label><label for="node-status">Статус<select id="node-status"><option value="">Не задан</option><option value="planned">Запланировано</option><option value="in-progress">В процессе</option><option value="done">Готово</option></select></label><label>Заметка<textarea id="note" rows="5" maxlength="100000" placeholder="Подробности, идеи, следующие шаги…"></textarea></label><button id="apply-editor" class="primary" type="button">Применить</button></form><div class="actions"><button id="child">＋ Дочерний узел</button><button id="sibling">＋ Соседний узел</button><button id="collapse">Свернуть ветку</button><button id="remove" class="danger">Удалить ветку</button></div><p class="help">Карта сохраняется в этом браузере автоматически. JSON-файл содержит состав, структуру, заметки и расположение узлов.</p><p id="status" role="status" aria-live="polite"></p></aside></main>
+<dialog id="rename-dialog"><form id="rename-form" method="dialog"><h2>Название узла</h2><input id="rename-label" maxlength="500" required aria-label="Название узла"><div><button type="button" id="cancel-rename">Отмена</button><button id="apply-rename" type="button" class="primary">Применить</button></div></form></dialog>
+<dialog id="save-dialog" aria-labelledby="save-heading"><div><h2 id="save-heading">Сохранить карту</h2><label for="save-name">Имя JSON-файла</label><input id="save-name" required maxlength="185" autocomplete="off"><p id="save-method"></p><p id="save-error" role="status"></p><div class="dialog-actions"><button id="cancel-save" type="button">Отмена</button><button id="download-copy" type="button">Скачать копию</button><button id="confirm-save" class="primary" type="button">Сохранить JSON</button></div></div></dialog>
+<dialog id="help-dialog" aria-labelledby="help-heading"><h2 id="help-heading">Работа с картой</h2><ul><li>Выберите узел и нажмите F3 или кнопку «i», чтобы открыть карточку. Двойной щелчок по листу также открывает карточку. Измените название или заметку и нажмите «Применить». В списке «Статус» можно отметить запланированный, текущий или завершённый узел; «Не задан» убирает значок.</li><li>Кнопка «+», клавиши + или Insert добавляют дочерний узел без подтверждения. Кнопка «−», клавиши − или Delete удаляют выбранный узел со всей веткой после подтверждения. Корневой узел удалить нельзя. В полях ввода эти клавиши не вызывают действий над картой. В карточке также есть добавление соседнего узла.</li><li>«Сменить родителя» переносит выбранную ветку к узлу, по которому вы щёлкнете после сообщения «Выберите нового родителя». Escape или «Отмена» отменяет выбор. Сам узел и его потомки не могут стать новым родителем этой ветки. Корневой узел нельзя переподчинять.</li><li>F2 — переименовать выбранный узел; F3 — показать или скрыть его карточку. Повторное нажатие кнопки «i» также скрывает карточку.</li><li>Двойной щелчок по группе или значок +/− — свернуть или раскрыть ветку. По листу — открыть карточку.</li><li>Панель инструментов можно перемещать за ручку с точками сверху. При фокусе на ручке используйте стрелки. Её положение запоминается в этом браузере.</li><li>Тяните узел вместе с его веткой. При переносе через корень потомки меняют сторону.</li><li>Тяните фон для перемещения карты; колесо мыши и кнопки +/− меняют масштаб. «Вписать» показывает всю карту.</li><li>Щелчок по пустому месту или «Скрыть» закрывает карточку.</li><li>Кнопки «Отменить» и «Повторить» управляют историей изменений.</li><li>«Сохранить» обновляет выбранный файл, «Сохранить как…» выбирает другой. Если прямой доступ недоступен, используйте скачивание JSON.</li><li>Последняя карта сохраняется в браузере автоматически. «Открыть JSON» восстанавливает карту из файла.</li></ul><div class="dialog-actions"><button id="close-help" class="primary" type="button">Понятно</button></div></dialog>
+<script>
+(function(global){
+'use strict';
+const statuses=['','planned','in-progress','done'];
+const colors=['#688b50','#be8149','#6d87ad','#ad7291'];
+function fresh(){return {format:'FreeMindAgain',version:1,nodes:[{id:'root',parent:null,label:'Новая карта',note:'',status:'',x:0,y:0,color:colors[0],collapsed:false}]};}
+function fileName(value){
+ const name=String(value).trim().replace(/[\\/:*?"<>|\u0000-\u001f]/g,'_').replace(/[. ]+$/g,'').slice(0,180);
+ if(!name)throw Error('Введите имя файла.');
+ return /\.json$/i.test(name)?name:name+'.json';
+}
+function validate(value){
+ if(!value||value.format!=='FreeMindAgain'||value.version!==1||!Array.isArray(value.nodes)||!value.nodes.length||value.nodes.length>5000)throw Error('Ожидается документ FreeMindAgain версии 1 (до 5000 узлов).');
+ const ids=new Set();let roots=0;
+ const nodes=value.nodes.map(n=>{if(!n||typeof n.id!=='string'||!n.id||ids.has(n.id)||!(n.parent===null||typeof n.parent==='string')||typeof n.label!=='string'||!n.label.trim()||n.label.length>500||!Number.isFinite(n.x)||!Number.isFinite(n.y)||Math.abs(n.x)>1e7||Math.abs(n.y)>1e7)throw Error('Некорректные данные узла.');if(n.status!=null&&!statuses.includes(n.status))throw Error('Неизвестный статус узла.');ids.add(n.id);if(n.parent===null)roots++;return {id:n.id,parent:n.parent,label:n.label,note:typeof n.note==='string'?n.note.slice(0,100000):'',status:n.status||'',x:n.x,y:n.y,color:/^#[0-9a-f]{6}$/i.test(n.color)?n.color:colors[0],collapsed:!!n.collapsed};});
+ if(roots!==1)throw Error('Карта должна содержать один корневой узел.');
+ const byId=new Map(nodes.map(n=>[n.id,n]));for(const n of nodes){const seen=new Set([n.id]);let p=n.parent;while(p!==null){if(!byId.has(p)||seen.has(p))throw Error('Нарушена структура дерева.');seen.add(p);p=byId.get(p).parent;}}
+ return {format:'FreeMindAgain',version:1,nodes,...(typeof value.fileName==='string'&&value.fileName.trim()?{fileName:fileName(value.fileName)}:{})};
+}
+class Model{
+ constructor(doc=fresh()){this.doc=validate(doc);this.selected=this.doc.nodes[0].id;this.undoStack=[];this.redoStack=[];}
+ get nodes(){return this.doc.nodes;} get current(){return this.nodes.find(n=>n.id===this.selected);}
+ descendants(id){const result=[],queue=[id];while(queue.length){const parent=queue.shift();for(const n of this.nodes)if(n.parent===parent){result.push(n);queue.push(n.id);}}return result;}
+ snapshot(){return JSON.stringify({doc:this.doc,selected:this.selected});}
+ restore(s){const v=JSON.parse(s);this.doc=v.doc;this.selected=v.selected;}
+ record(before){if(before===this.snapshot())return;this.undoStack.push(before);if(this.undoStack.length>100)this.undoStack.shift();this.redoStack=[];}
+ change(fn){const before=this.snapshot();fn();this.record(before);}
+ undo(){if(!this.undoStack.length)return;this.redoStack.push(this.snapshot());this.restore(this.undoStack.pop());}
+ redo(){if(!this.redoStack.length)return;this.undoStack.push(this.snapshot());this.restore(this.redoStack.pop());}
+ add(sibling=false){this.change(()=>{let p=this.current;if(sibling&&p.parent)p=this.nodes.find(n=>n.id===p.parent);const count=this.nodes.filter(n=>n.parent===p.id).length;const side=p.parent?(p.x<this.nodes.find(n=>n.parent===null).x?-1:1):(count%2?-1:1);const n={id:global.crypto.randomUUID(),parent:p.id,label:'Новая мысль',note:'',status:'',x:p.x+side*260,y:p.y+Math.floor(count/(p.parent?1:2))*85-40,color:p.parent?p.color:colors[count%colors.length],collapsed:false};p.collapsed=false;this.nodes.push(n);this.selected=n.id;});}
+ // Align each level by its edge nearest the parent, including collapsed nodes.
+ alignBranch(id,side,widths){
+  const queue=[this.nodes.find(n=>n.id===id)];
+  while(queue.length){
+   const parent=queue.shift();
+   for(const child of this.nodes.filter(n=>n.parent===parent.id)){
+    child.x=side<0?parent.x-80-widths.get(child.id):parent.x+widths.get(parent.id)+80;
+    queue.push(child);
+   }
+  }
+ }
+ reparent(id,parentId,widths){
+  const n=this.nodes.find(v=>v.id===id),parent=this.nodes.find(v=>v.id===parentId);
+  if(!n||!parent||!n.parent)throw Error('Корневой узел нельзя переподчинить.');
+  const branch=[n,...this.descendants(id)];
+  if(branch.some(v=>v.id===parentId))throw Error('Нельзя выбрать сам узел или его потомка.');
+  if(n.parent===parentId)return;
+  this.change(()=>{
+   const siblings=this.nodes.filter(v=>v.parent===parentId&&v.id!==id);
+   const root=this.nodes.find(v=>!v.parent);
+   const side=parent.parent?(parent.x+widths.get(parent.id)/2<root.x+widths.get(root.id)/2?-1:1):(n.x+widths.get(n.id)/2<root.x+widths.get(root.id)/2?-1:1);
+   const bottom=siblings.flatMap(v=>[v,...this.descendants(v.id)]);
+   const y=bottom.length?Math.max(...bottom.map(v=>v.y))+85:parent.y;
+   const dy=y-n.y;for(const v of branch){v.y+=dy;if(parent.parent)v.color=parent.color;}
+   n.parent=parentId;parent.collapsed=false;
+   n.x=side<0?parent.x-80-widths.get(n.id):parent.x+widths.get(parent.id)+80;
+   this.alignBranch(id,side,widths);this.selected=id;
+  });
+ }
+ remove(){if(!this.current.parent)return;this.change(()=>{const n=this.current,ids=new Set([n.id,...this.descendants(n.id).map(v=>v.id)]);this.doc.nodes=this.nodes.filter(v=>!ids.has(v.id));this.selected=n.parent;});}
+ rename(label,note=this.current.note,status=this.current.status){if(!statuses.includes(status))throw Error('Неизвестный статус узла.');label=label.trim();if(!label||label.length>500)throw Error('Введите название длиной от 1 до 500 символов.');this.change(()=>Object.assign(this.current,{label,note,status}));}
+ load(value){const doc=validate(value);this.change(()=>{this.doc=doc;this.selected=doc.nodes.find(n=>n.parent===null).id;});}
+}
+global.Mindmap={Model,fresh,validate,fileName};if(typeof module!=='undefined')module.exports=global.Mindmap;
+})(globalThis);
+
+</script><script>
+'use strict';
+const $=s=>document.querySelector(s),canvas=$('#canvas'),world=$('#world'),nodes=$('#nodes'),edges=$('#edges');
+const storageKey='freemindagain.document.v1';let model=new Mindmap.Model(),zoom=1,pan={x:0,y:0},gesture=null,saveError='',reparentSource=null;
+try{const saved=localStorage.getItem(storageKey);if(saved)model=new Mindmap.Model(JSON.parse(saved));}catch{saveError='Локальная копия недоступна или повреждена. Используйте JSON для сохранения.';}
+function persist(){try{localStorage.setItem(storageKey,JSON.stringify(model.doc));$('#status').textContent='Сохранено в браузере · '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}catch{$('#status').textContent='Не удалось сохранить в браузере. Скачайте JSON-файл.';}}
+function visible(n){while(n.parent){n=model.nodes.find(v=>v.id===n.parent);if(n.collapsed)return false;}return true;}
+function showDetails(){ details();$('#details').hidden=false;document.querySelector('main').classList.remove('card-hidden');$('#show-details').setAttribute('aria-expanded','true'); }
+function hideDetails(){ $('#details').hidden=true;document.querySelector('main').classList.add('card-hidden');$('#show-details').setAttribute('aria-expanded','false'); }
+function toggleDetails(){if($('#details').hidden)showDetails();else{hideDetails();canvas.focus({preventScroll:true});}}
+$('#show-details').onclick=toggleDetails;
+$('#hide-details').onclick=()=>{hideDetails();canvas.focus({preventScroll:true});};
+function select(id){if(reparentSource)return;model.selected=id;for(const el of nodes.children){el.classList.toggle('selected',el.dataset.id===id);el.setAttribute('aria-pressed',String(el.dataset.id===id));}details();}
+function details(){const n=model.current;$('#node-title').textContent=n.label;$('#label').value=n.label;$('#note').value=n.note;$('#node-status').value=n.status||'';const ancestors=[];let p=n;while(p.parent){p=model.nodes.find(v=>v.id===p.parent);ancestors.unshift(p.label);}$('#path').textContent=ancestors.join(' / ')||'Центральная мысль';$('#reparent').disabled=!n.parent;$('#remove').disabled=!n.parent;$('#delete-node').disabled=!n.parent;$('#sibling').disabled=!n.parent;$('#collapse').disabled=!model.nodes.some(v=>v.parent===n.id);$('#collapse').textContent=n.collapsed?'Раскрыть ветку':'Свернуть ветку';$('#undo').disabled=!model.undoStack.length;$('#redo').disabled=!model.redoStack.length;$('#title').textContent=model.nodes.find(v=>!v.parent).label;$('#title').title=$('#title').textContent;}
+const statusLabels={'planned':'Запланировано','in-progress':'В процессе','done':'Готово'};
+const statusPaths={
+ 'planned':'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 4h3"/>',
+ 'in-progress':'<circle cx="12" cy="12" r="8" stroke-opacity=".25"/><path d="M12 4a8 8 0 0 1 8 8m-8-4v5l3 2"/>',
+ 'done':'<path d="m5 12 4.5 4.5L19 7"/>'
+};
+function statusIcon(n){
+ if(!n.status)return null;
+ const icon=document.createElement('span');icon.className='node-status '+n.status;icon.title=statusLabels[n.status];icon.setAttribute('aria-hidden','true');
+ icon.innerHTML='<svg viewBox="0 0 24 24" focusable="false">'+statusPaths[n.status]+'</svg>';
+ return icon;
+}
+function render(save=true){nodes.replaceChildren();for(const n of model.nodes.filter(visible)){const el=document.createElement('div');el.className='node'+(!n.parent?' root':model.nodes.some(v=>v.parent===n.id)?' group':'')+(n.id===model.selected?' selected':'');el.dataset.id=n.id;el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label',n.label+(n.status?' — '+statusLabels[n.status]:''));el.setAttribute('aria-pressed',String(n.id===model.selected));el.style.setProperty('--color',n.color);const text=document.createElement('span');text.textContent=n.label;const icon=statusIcon(n);if(icon)el.append(icon);el.append(text);if(model.nodes.some(v=>v.parent===n.id)){const toggle=document.createElement('span');toggle.className='toggle'+(n.collapsed?' collapsed':'');toggle.setAttribute('aria-hidden','true');el.setAttribute('aria-expanded',String(!n.collapsed));toggle.onpointerdown=e=>e.stopPropagation();toggle.onclick=e=>{e.stopPropagation();select(n.id);model.change(()=>n.collapsed=!n.collapsed);render();};el.append(toggle);}el.onfocus=()=>select(n.id);nodes.append(el);}position();details();if(save)persist();}
+function branchSide(n,widths){
+ const root=model.nodes.find(v=>!v.parent);
+ if(!n.parent)return 0;
+ return n.x+(widths.get(n.id)||0)/2<root.x+(widths.get(root.id)||0)/2?-1:1;
+}
+function nodeWidths(){
+ const widths=new Map([...nodes.children].map(el=>[el.dataset.id,el.offsetWidth]));
+ for(const n of model.nodes){
+  if(widths.has(n.id))continue;
+  const el=document.createElement('div');
+  el.className='node'+(!n.parent?' root':model.nodes.some(v=>v.parent===n.id)?' group':'');
+  el.style.visibility='hidden';const icon=statusIcon(n);if(icon)el.append(icon);el.append(document.createTextNode(n.label));
+  if(model.nodes.some(v=>v.parent===n.id)){const t=document.createElement('span');t.className='toggle collapsed';el.append(t);}
+  nodes.append(el);widths.set(n.id,el.offsetWidth);el.remove();
+ }
+ return widths;
+}
+function position(){const els=new Map([...nodes.children].map(el=>[el.dataset.id,el])),widths=new Map([...els].map(([id,el])=>[id,el.offsetWidth]));for(const n of model.nodes){const el=els.get(n.id);if(el){el.style.left=n.x+'px';el.style.top=n.y+'px';el.style.textAlign=branchSide(n,widths)<0?'right':'left';if(!n.parent)el.style.textAlign='center';}}edges.replaceChildren();for(const n of model.nodes.filter(n=>n.parent&&els.has(n.id))){const p=model.nodes.find(v=>v.id===n.parent),a=els.get(p.id),b=els.get(n.id);if(!a)continue;const right=n.x+b.offsetWidth/2>=p.x+a.offsetWidth/2,x1=p.x+(right?a.offsetWidth:0),x2=n.x+(right?0:b.offsetWidth),y1=p.y+a.offsetHeight*.75,y2=n.y+b.offsetHeight*.75,bend=Math.max(35,Math.abs(x2-x1)*.45),s=right?1:-1,path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',`M ${x1} ${y1} C ${x1+s*bend} ${y1} ${x2-s*bend} ${y2} ${x2} ${y2}`);path.setAttribute('fill','none');path.setAttribute('stroke',n.color);path.setAttribute('stroke-width','2');edges.append(path);}}
+function transform(){world.style.transform=`translate(${pan.x}px,${pan.y}px) scale(${zoom})`;$('#scale').value=Math.round(zoom*100)+'%';}
+function fit(){const els=[...nodes.children],left=Math.min(...els.map(el=>parseFloat(el.style.left))),top=Math.min(...els.map(el=>parseFloat(el.style.top))),right=Math.max(...els.map(el=>parseFloat(el.style.left)+el.offsetWidth)),bottom=Math.max(...els.map(el=>parseFloat(el.style.top)+el.offsetHeight));zoom=Math.max(.03,Math.min(1,(canvas.clientWidth-80)/(right-left),(canvas.clientHeight-190)/(bottom-top)));pan={x:(canvas.clientWidth-(right-left)*zoom)/2-left*zoom,y:105+(canvas.clientHeight-185-(bottom-top)*zoom)/2-top*zoom};transform();}
+function zoomAt(factor,x=canvas.clientWidth/2,y=canvas.clientHeight/2){const z=Math.max(.03,Math.min(3,zoom*factor));pan={x:x-(x-pan.x)*z/zoom,y:y-(y-pan.y)*z/zoom};zoom=z;transform();}
+let renameTarget=null;
+function rename(){
+ const dialog=$('#rename-dialog');
+ if(dialog.open)return;
+ renameTarget=model.selected;
+ $('#rename-form').reset();
+ $('#rename-label').setCustomValidity('');
+ const input=$('#rename-label');
+ input.value=model.current.label;
+ dialog.showModal();input.focus();input.select();
+}
+function closeRename(){
+ const target=renameTarget;
+ renameTarget=null;
+ $('#rename-dialog').close();
+ $('#rename-form').reset();
+ // Closing a native dialog restores focus, which can select an older node.
+ if(target&&model.nodes.some(n=>n.id===target))model.selected=target;
+ render();
+ const el=[...nodes.children].find(n=>n.dataset.id===model.selected);
+ el?.focus({preventScroll:true});
+}
+function add(sibling=false){
+ model.add(sibling);render(false);
+ const n=model.current,p=model.nodes.find(v=>v.id===n.parent),widths=nodeWidths(),side=branchSide(n,widths);
+ n.x=side<0?p.x-80-widths.get(n.id):p.x+widths.get(p.id)+80;
+ position();persist();rename();
+}
+function applyRename(){
+ if(!$('#rename-dialog').open||!renameTarget)return;
+ const input=$('#rename-label');
+ if(!input.reportValidity())return;
+ try{
+  model.selected=renameTarget;
+  model.rename(input.value);
+  closeRename();
+ }catch(err){input.setCustomValidity(err.message);input.reportValidity();}
+}
+$('#apply-rename').onclick=applyRename;
+$('#rename-form').onsubmit=e=>{e.preventDefault();applyRename();};
+$('#rename-label').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();applyRename();}});
+$('#rename-label').addEventListener('input',e=>e.target.setCustomValidity(''));
+$('#cancel-rename').onclick=closeRename;
+$('#rename-dialog').addEventListener('cancel',e=>{e.preventDefault();closeRename();});
+function applyEditor(){
+ if(!$('#editor').reportValidity())return;
+ try{model.rename($('#label').value,$('#note').value,$('#node-status').value);render();}catch(err){alert(err.message);}
+}
+$('#apply-editor').onclick=applyEditor;
+$('#editor').onsubmit=e=>{e.preventDefault();applyEditor();};
+$('#label').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();applyEditor();}});
+$('#add').onclick=$('#child').onclick=()=>add();$('#sibling').onclick=()=>add(true);function removeSelected(){
+ if(!model.current.parent)return;
+ if(confirm('Удалить «'+model.current.label+'» и все дочерние ветки? Действие можно отменить.')){model.remove();render();}
+}
+$('#remove').onclick=$('#delete-node').onclick=removeSelected;
+$('#collapse').onclick=()=>{model.change(()=>model.current.collapsed=!model.current.collapsed);render();};
+$('#undo').onclick=()=>{fileHandle=null;model.undo();render();};$('#redo').onclick=()=>{fileHandle=null;model.redo();render();};
+$('#new').onclick=()=>{if(confirm('Создать новую карту? Текущую можно предварительно сохранить в JSON. Действие можно отменить.')){fileHandle=null;model.load(Mindmap.fresh());render();fit();}};
+let fileHandle=null,saveAs=false,saving=false;
+const nativeFiles=()=>window.isSecureContext&&typeof window.showSaveFilePicker==='function';
+function showSave(as=false){
+ saveAs=as;
+ const input=$('#save-name');
+ input.setCustomValidity('');input.value=fileHandle?.name||model.doc.fileName||Mindmap.fileName(model.nodes.find(n=>!n.parent).label);
+ $('#save-error').textContent='';
+ $('#save-method').textContent=nativeFiles()?(fileHandle&&!as?'После подтверждения будет обновлён выбранный файл. Измените имя, чтобы выбрать другой файл.':'Выберите папку и файл в системном окне. Следующие сохранения будут обновлять этот файл.'):'Прямой доступ к файлам недоступен. JSON будет скачан средствами браузера.';
+ $('#save-dialog').showModal();input.focus();input.select();
+}
+$('#save').onclick=()=>showSave();$('#save-as').onclick=()=>showSave(true);
+function downloadDocument(name){
+ const doc={...model.doc,fileName:name};
+ const blob=new Blob([JSON.stringify(doc,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ model.doc.fileName=name;persist();$('#save-dialog').close();
+}
+async function saveDocument(download=false){
+ if(saving)return;
+ const input=$('#save-name');if(!input.reportValidity())return;
+ let name;try{name=Mindmap.fileName(input.value);}catch(err){input.setCustomValidity(err.message);input.reportValidity();return;}
+ if(download||!nativeFiles()){downloadDocument(name);return;}
+ saving=true;$('#confirm-save').disabled=true;$('#download-copy').disabled=true;$('#cancel-save').disabled=true;
+ let writable;
+ try{
+  let handle=fileHandle;
+  if(saveAs||!handle||handle.name!==name){
+   handle=await window.showSaveFilePicker({suggestedName:name,types:[{description:'Карта FreeMindAgain (JSON)',accept:{'application/json':['.json']}}]});
+  }
+  const doc={...model.doc,fileName:handle.name};
+  writable=await handle.createWritable();
+  await writable.write(JSON.stringify(doc,null,2));await writable.close();writable=null;
+  fileHandle=handle;model.doc.fileName=handle.name;persist();$('#save-dialog').close();
+  $('#status').textContent='Файл сохранён: '+handle.name;
+ }catch(err){
+  if(writable)try{await writable.abort();}catch{}
+  if(err.name==='AbortError')$('#save-error').textContent='Выбор файла отменён. Файл не изменён.';
+  else $('#save-error').textContent='Не удалось записать файл: '+err.message+' Можно повторить или скачать копию JSON.';
+ }finally{saving=false;$('#confirm-save').disabled=false;$('#download-copy').disabled=false;$('#cancel-save').disabled=false;}
+}
+$('#confirm-save').onclick=()=>saveDocument();$('#download-copy').onclick=()=>saveDocument(true);
+$('#cancel-save').onclick=()=>$('#save-dialog').close();
+$('#save-dialog').addEventListener('cancel',e=>{if(saving)e.preventDefault();});
+$('#save-name').addEventListener('input',e=>e.target.setCustomValidity(''));
+$('#save-name').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();saveDocument();}});
+async function openDocument(file,handle=null){
+ try{
+  if(file.size>10*1024*1024)throw Error('Файл больше 10 МБ.');
+  const doc=Mindmap.validate(JSON.parse(await file.text()));
+  if(handle||!doc.fileName)doc.fileName=Mindmap.fileName(file.name);
+  if(confirm('Открыть карту из файла? Текущую карту можно будет вернуть отменой.')){cancelReparent();model.load(doc);fileHandle=handle;render();fit();}
+ }catch(err){alert('Не удалось открыть карту: '+err.message);}
+}
+$('#open').onclick=async()=>{
+ if(window.isSecureContext&&typeof window.showOpenFilePicker==='function'){
+  try{const [handle]=await window.showOpenFilePicker({multiple:false,types:[{description:'Карта JSON',accept:{'application/json':['.json']}}]});await openDocument(await handle.getFile(),handle);return;}
+  catch(err){if(err.name==='AbortError')return;}
+ }
+ $('#file').click();
+};
+$('#file').onchange=async e=>{const file=e.target.files[0];if(file)await openDocument(file);e.target.value='';};
+function cancelReparent(){
+ reparentSource=null;$('#reparent-notice').hidden=true;canvas.classList.remove('choosing-parent');
+ for(const el of nodes.children)el.classList.remove('reparent-source');
+}
+$('#reparent').onclick=()=>{
+ if(reparentSource){cancelReparent();return;}
+ if(!model.current.parent)return;
+ reparentSource=model.selected;$('#reparent-message').textContent='Выберите нового родителя';
+ $('#reparent-notice').hidden=false;canvas.classList.add('choosing-parent');
+ for(const el of nodes.children)el.classList.toggle('reparent-source',el.dataset.id===reparentSource);
+};
+$('#cancel-reparent').onclick=cancelReparent;
+// Cancel the mode before other toolbar/card actions can change the document.
+document.addEventListener('click',e=>{
+ if(reparentSource&&e.target.closest('button')&&!e.target.closest('#reparent,#cancel-reparent,#canvas,.zoom'))cancelReparent();
+},true);
+canvas.addEventListener('click',e=>{
+ if(!reparentSource)return;
+ const el=e.target.closest('.node');if(!el)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ try{
+  model.reparent(reparentSource,el.dataset.id,nodeWidths());cancelReparent();render();fit();
+ }catch(err){$('#reparent-message').textContent=err.message+' Выберите нового родителя';}
+},true);
+// Pointer capture retargets native clicks to the canvas. Hit-test the pointer
+// location so a double click still reaches the node under the cursor.
+canvas.ondblclick=e=>{
+ if(reparentSource)return;
+ const hit=document.elementFromPoint(e.clientX,e.clientY);
+ if(!hit||hit.closest('.toggle'))return;
+ const el=hit.closest('.node');if(!el)return;
+ select(el.dataset.id);const n=model.current;
+ if(model.nodes.some(v=>v.parent===n.id)){model.change(()=>n.collapsed=!n.collapsed);render();}
+ else showDetails();
+};
+canvas.onpointerdown=e=>{if(reparentSource&&e.target.closest('.node')){e.preventDefault();return;}if(e.button!==0||e.target.closest('.toggle'))return;const el=e.target.closest('.node');if(el)select(el.dataset.id);gesture={id:e.pointerId,x:e.clientX,y:e.clientY,pan:{...pan},before:model.snapshot(),side:el?branchSide(model.current,nodeWidths()):0,items:el?[model.current,...model.descendants(model.selected)].map(n=>({n,x:n.x,y:n.y})):null};canvas.setPointerCapture(e.pointerId);e.preventDefault();};
+canvas.onpointermove=e=>{if(!gesture||gesture.id!==e.pointerId)return;const dx=e.clientX-gesture.x,dy=e.clientY-gesture.y;if(gesture.items){for(const v of gesture.items){v.n.x=v.x+dx/zoom;v.n.y=v.y+dy/zoom;}position();}else{pan={x:gesture.pan.x+dx,y:gesture.pan.y+dy};transform();}};
+function end(e){if(!gesture||e.pointerId!==gesture.id)return;const g=gesture;gesture=null;if(e.type==='pointercancel'){model.restore(g.before);render(false);}else if(g.items){
+ const moved=g.items[0].n,widths=nodeWidths();
+ if(e.type==='pointerup'&&moved.parent&&Math.hypot(e.clientX-g.x,e.clientY-g.y)>3){
+  const root=model.nodes.find(n=>!n.parent);
+  const side=moved.x+widths.get(moved.id)/2<root.x+widths.get(root.id)/2?-1:1;
+  if(side!==g.side)model.alignBranch(moved.id,side,widths);
+ }
+ position();model.record(g.before);details();persist();
+}else if(e.type==='pointerup'&&Math.hypot(e.clientX-g.x,e.clientY-g.y)<3){hideDetails();}
+}
+canvas.onpointerup=end;canvas.onpointercancel=end;canvas.onlostpointercapture=end;
+canvas.addEventListener('wheel',e=>{e.preventDefault();const r=canvas.getBoundingClientRect();zoomAt(Math.exp(-e.deltaY*.0015),e.clientX-r.left,e.clientY-r.top);},{passive:false});
+$('#in').onclick=()=>zoomAt(1.2);$('#out').onclick=()=>zoomAt(1/1.2);$('#fit').onclick=fit;
+$('#show-help').onclick=()=>$('#help-dialog').showModal();
+$('#close-help').onclick=()=>$('#help-dialog').close();
+document.addEventListener('keydown',e=>{
+ if(reparentSource){if(e.key==='Escape'){e.preventDefault();cancelReparent();}return;}
+ if(document.querySelector('dialog[open]')||gesture||toolbarDrag||e.isComposing||e.repeat||e.ctrlKey||e.metaKey||e.altKey)return;
+ if(e.key==='F3'){e.preventDefault();toggleDetails();return;}
+ if(e.target.closest('input,textarea,select,[contenteditable]:not([contenteditable="false"])'))return;
+ if(e.key==='F2'){e.preventDefault();rename();}
+
+ else if(e.key==='+'||e.key==='Insert'){e.preventDefault();add();}
+ else if(e.key==='-'||e.key==='−'||e.key==='Delete'){e.preventDefault();removeSelected();}
+});
+const toolPanel=$('#tool-panel'),toolbarHandle=$('#toolbar-handle'),toolbarKey='freemindagain.toolbar.v1';
+let toolbarPosition=null,toolbarDrag=null;
+try{const v=JSON.parse(localStorage.getItem(toolbarKey));if(v&&Number.isFinite(v.x)&&Number.isFinite(v.y))toolbarPosition={x:Math.max(0,Math.min(1,v.x)),y:Math.max(0,Math.min(1,v.y))};}catch{}
+function panelBounds(){return {x:Math.max(0,canvas.clientWidth-toolPanel.offsetWidth-16),y:Math.max(0,canvas.clientHeight-toolPanel.offsetHeight-16)};}
+function placeToolbar(){
+ if(!toolbarPosition)return;
+ const max=panelBounds();toolPanel.style.left=Math.max(0,toolbarPosition.x*max.x)+'px';toolPanel.style.top=Math.max(0,toolbarPosition.y*max.y)+'px';toolPanel.style.right='auto';
+}
+function moveToolbar(x,y){
+ const max=panelBounds();x=Math.max(0,Math.min(max.x,x));y=Math.max(0,Math.min(max.y,y));
+ toolbarPosition={x:max.x?x/max.x:0,y:max.y?y/max.y:0};placeToolbar();
+}
+function saveToolbar(){try{localStorage.setItem(toolbarKey,JSON.stringify(toolbarPosition));}catch{}}
+toolbarHandle.onpointerdown=e=>{
+ if(e.button!==0)return;e.preventDefault();
+ toolbarDrag={id:e.pointerId,x:e.clientX,y:e.clientY,left:toolPanel.offsetLeft,top:toolPanel.offsetTop,before:toolbarPosition&&{...toolbarPosition}};
+ toolbarHandle.setPointerCapture(e.pointerId);toolPanel.classList.add('dragging');
+};
+toolbarHandle.onpointermove=e=>{
+ if(!toolbarDrag||e.pointerId!==toolbarDrag.id)return;
+ moveToolbar(toolbarDrag.left+e.clientX-toolbarDrag.x,toolbarDrag.top+e.clientY-toolbarDrag.y);
+};
+function endToolbar(e){
+ if(!toolbarDrag||e.pointerId!==toolbarDrag.id)return;
+ const g=toolbarDrag;toolbarDrag=null;toolPanel.classList.remove('dragging');
+ if(e.type==='pointercancel'){
+  toolbarPosition=g.before;
+  if(toolbarPosition)placeToolbar();else{toolPanel.style.left='';toolPanel.style.top='';toolPanel.style.right='';}
+ }else saveToolbar();
+}
+toolbarHandle.onpointerup=endToolbar;toolbarHandle.onpointercancel=endToolbar;toolbarHandle.onlostpointercapture=endToolbar;
+toolbarHandle.addEventListener('keydown',e=>{
+ const steps={ArrowLeft:[-12,0],ArrowRight:[12,0],ArrowUp:[0,-12],ArrowDown:[0,12]};
+ if(!steps[e.key])return;e.preventDefault();e.stopPropagation();
+ const [dx,dy]=steps[e.key];moveToolbar(toolPanel.offsetLeft+dx,toolPanel.offsetTop+dy);saveToolbar();
+});
+new ResizeObserver(()=>{position();fit();placeToolbar();}).observe(canvas);hideDetails();render(false);fit();placeToolbar();if(saveError)$('#status').textContent=saveError;else persist();
+
+</script></body></html>
